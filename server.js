@@ -12,8 +12,9 @@ const app = express();
 connectDB();
 
 const allowedOrigins = [
-    'http://localhost:3000',  // Your React app's default origin
-    'http://localhost:3001',  // Another port you might be using
+    // 'http://localhost:3000',  // Your React app's default origin
+    // 'http://localhost:3001',  // Another port you might be using
+    'https://freshbitezone.onrender.com/',
     // Add any other domains you need to allow
   ];
 // Middleware FIRST
