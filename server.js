@@ -25,20 +25,24 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // CORS configuration
-const allowedOrigins = process.env.NODE_ENV === 'production'
-  ? [
-      process.env.FRONTEND_PROD_URL,
-      process.env.ADMIN_PROD_URL
-    ].filter(Boolean) // Remove any undefined values
-  : [
-      'http://localhost:3000',
-      'http://localhost:3001'
-    ];
+const allowedOrigins = [
+  'https://freshbitezone.netlify.app', // Your Netlify frontend
+  'http://localhost:3000'              // Local development
+];
 
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Cache-Control'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
 
