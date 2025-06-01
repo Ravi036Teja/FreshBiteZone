@@ -9,29 +9,22 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "bcryptjs": "^3.0.2",
-    "body-parser": "^1.20.2",
-    "compression": "^1.8.0",
-    "cors": "^2.8.5",
-<<<<<<< HEAD
-    "dotenv": "^16.5.0",
-    "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.2",
-    "moment": "^2.30.1",
-    "mongoose": "^8.13.2",
-    "nodemailer": "^6.10.1",
-    "razorpay": "^2.9.6",
-=======
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "express-rate-limit": "^6.11.2",
-    "helmet": "^7.2.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.0.3",
-    "morgan": "^1.10.0",
->>>>>>> 4334d9c3bc17205670c6354b60184aa4a02a6708
-    "uuid": "^11.1.0"
-  },
+  "bcryptjs": "^3.0.2",
+  "body-parser": "^1.20.2",
+  "compression": "^1.8.0",
+  "cors": "^2.8.5",
+  "dotenv": "^16.5.0",
+  "express": "^4.18.2",
+  "express-rate-limit": "^6.11.2",
+  "helmet": "^7.2.0",
+  "jsonwebtoken": "^9.0.2",
+  "moment": "^2.30.1",
+  "mongoose": "^8.13.2",
+  "morgan": "^1.10.0",
+  "nodemailer": "^6.10.1",
+  "razorpay": "^2.9.6",
+  "uuid": "^11.1.0"
+},
   "devDependencies": {
     "cross-env": "^7.0.3",
     "nodemon": "^3.0.2"
