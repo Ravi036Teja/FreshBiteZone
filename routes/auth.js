@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
 
+
 // LOGIN route
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -29,7 +30,7 @@ router.post('/login', async (req, res) => {
 
 // REGISTER route
 router.post('/register', async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, phone, email, password } = req.body;
 
   try {
     // Check if user already exists
@@ -43,6 +44,7 @@ router.post('/register', async (req, res) => {
     // Create new user
     const newUser = new User({
       name,
+      phone,
       email,
       password: hashedPassword
     });

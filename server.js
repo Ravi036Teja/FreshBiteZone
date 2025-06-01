@@ -3,42 +3,58 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const bodyParser = require('body-parser');
-const authRoutes = require('./routes/auth');  // Authentication routes
-const orderRoutes = require('./routes/orderRoutes');
-
 
 dotenv.config();
 const app = express();
 connectDB();
 
-const allowedOrigins = [
-    // 'http://localhost:3000',  // Your React app's default origin
-    // 'http://localhost:3001',  // Another port you might be using
-    'https://freshbitezone.onrender.com/',
-    // Add any other domains you need to allow
-  ];
-// Middleware FIRST
+// Middleware
 app.use(cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
-      
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    },
-    credentials: true
-  }));
+  origin: ['http://localhost:3000', 'http://localhost:3001'], // Allow both frontend and admin panel
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cache-Control'],
+  credentials: true
+}));
+
+// Also update your preflight options:
+app.options('*', cors({
+  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cache-Control'],
+  credentials: true
+}));
+
+app.options('*', cors()); // Handle preflight for all routes
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Routes AFTER middleware
+// Route imports
+const authRoutes = require('./routes/auth');
+const orderRoutes = require('./routes/orderRoutes');
+const paymentRoutes = require('./routes/payment');
+const menuRoutes = require('./routes/menuRoutes');
+const inventoryRoutes = require("./routes/inventoryRoutes");
+app.use("/api/inventory", inventoryRoutes);
+app.use("/api/budget", require("./routes/budgetRoute"));
+// Add to server.js
+const analyticsRoutes = require("./routes/analytics");
+const expensesRoutes = require('./routes/expenses');
+app.use('/api/expenses', expensesRoutes);
+app.use("/api/analytics", analyticsRoutes);
+
+
+// Mount routes with explicit paths
 app.use('/api/auth', authRoutes);
-app.use('/api/menu', require('./routes/menuRoutes'));
+app.use('/api/menu', menuRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/payments', paymentRoutes);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT} 🚀`));

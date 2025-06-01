@@ -14,7 +14,12 @@ const MenuItemSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   imageUrl: String,
   category: String,
-  isAvailable: { type: Boolean, default: true }
+  isAvailable: { type: Boolean, default: true },
+  costPrice: { type: Number, required: true }, // Add this
+  ingredients: [{
+    inventoryItem: { type: mongoose.Schema.Types.ObjectId, ref: 'InventoryItem' },
+    quantity: Number
+  }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('MenuItem', MenuItemSchema);
