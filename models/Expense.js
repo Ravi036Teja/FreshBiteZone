@@ -15,7 +15,7 @@ const mongoose = require("mongoose");
 const expenseSchema = new mongoose.Schema({
   category: {
     type: String,
-    enum: ["Groceries", "Packaging", "Salary", "Others"],
+    enum: ["Groceries", "Gas", "Packaging", "Salary", "Rent", "Others"],
     required: true,
   },
   amount: {
