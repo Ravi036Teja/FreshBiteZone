@@ -68,13 +68,19 @@ router.post('/add', async (req, res) => {
 });
 
 // Get all menu items
+// router.get('/', async (req, res) => {
+//   try {
+//     const items = await MenuItem.find();
+//     res.json(items);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+// // Get all menu items
 router.get('/', async (req, res) => {
-  try {
-    const items = await MenuItem.find();
-    res.json(items);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  const items = await MenuItem.find();
+  res.json(items);
 });
 
 // Update menu item
