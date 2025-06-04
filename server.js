@@ -27,6 +27,7 @@ app.use(limiter);
 // CORS configuration
 const allowedOrigins = [
   'https://freshbitezone.netlify.app',
+  'https://mregg.onrender.com/',
   'https://freshbitezone-adminpanel.netlify.app',
   'http://localhost:3000',
   'http://localhost:3001'
