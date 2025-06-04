@@ -26,21 +26,37 @@ app.use(limiter);
 
 // CORS configuration
 const allowedOrigins = [
+  'https://mregg.onrender.com',
   'https://freshbitezone.netlify.app',
-  'https://mregg.onrender.com/',
   'https://freshbitezone-adminpanel.netlify.app',
   'http://localhost:3000',
   'http://localhost:3001'
 ];
 
+// app.use(cors({
+//   origin: allowedOrigins,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization', 'Cache-Control'],
+//   credentials: true
+// }));
+
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    // Allow requests with no origin like mobile apps or curl
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Cache-Control'],
-  credentials: true
 }));
 
-app.options('*', cors());
+
+// app.options('*', cors());
 
 // Logging middleware
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
